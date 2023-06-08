@@ -177,20 +177,20 @@
 </template>
 
 <script>
-import useUserStore from "@/stores/user"
+// import useUserStore from "@/stores/user"
     export default {
-        name: 'manage',
-        beforeRouteEnter(to, from, next) {
-            const store = useUserStore();
+        name: 'Manage',
+        // beforeRouteEnter(to, from, next) {
+        //     const store = useUserStore();
 
-            if(store.userLoggedIn){
-                // next function is used to redirect the visitor
-                next();
-            } else{
-                next({
-                    name: "home"
-                });
-            }
-        }
+        //     if(store.userLoggedIn){
+        //         // next function is used to redirect the visitor
+        //         next();
+        //     } else{
+        //         next({
+        //             name: "home"
+        //         });
+        //     }
+        // }
     }
 </script>
