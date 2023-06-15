@@ -51,6 +51,7 @@ export default {
       uploads: []
     }
   },
+  props: ['addSong'],
   methods: {
     upload($event) {
       this.is_dragover = false
@@ -101,7 +102,12 @@ export default {
             }
 
             song.url = await task.snapshot.ref.getDownloadURL()
-            await songsCollection.add(song)
+            const songRef = await songsCollection.add(song);
+            const songSnapshot = await songRef.get();
+
+
+            // change this to a snapshot and then add it to the addSong function which add the data into the array
+            this.addSong(songSnapshot);
 
             this.uploads[uploadIndex].variant = 'bg-green-400'
             this.uploads[uploadIndex].icon = 'fas fa-check'
