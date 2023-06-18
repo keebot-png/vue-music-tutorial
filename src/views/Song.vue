@@ -35,14 +35,17 @@
         >
         {{ comment_alert_message }}
         </div>
-        <vee-form :validation-schema="schema" @submit="addComment">
+        <vee-form :validation-schema="schema" 
+        @submit="addComment" 
+        v-if="userLoggedIn"
+        >
           <vee-field as="textarea"
             name="comments"
             class="block w-full py-1.5 px-3 text-gray-800 border border-gray-300 transition duration-500 focus:outline-none focus:border-black rounded mb-4"
             placeholder="Your comment here..."
           ></vee-field>
           <ErrorMessage class="text-red-600" name="comments" />
-          <button type="submit" class="py-1.5 px-3 rounded text-white bg-green-600 block"
+          <button type="submit" class="comment-submit py-1.5 px-3 rounded text-white bg-green-600 block"
           :disabled="comment_in_submission">
             Submit
           </button>
@@ -135,7 +138,9 @@
 </template>
 
 <script>
-import { songsCollection, auth, commentsCollection } from '@/includes/firebase.js'
+import { songsCollection, auth, commentsCollection } from '@/includes/firebase.js';
+import { mapState } from "pinia";
+import useUserStore from "@/stores/user";
 
 export default {
   name: 'Song',
@@ -143,7 +148,7 @@ export default {
   data() {
     return {
       song: {},
-      schemachema: {
+      schema: {
         comments: 'required|min:3',
       },
         comment_in_submission: false,
@@ -160,12 +165,14 @@ methods: {
         this.comment_alert_message = 'Please wait, your comment is being submitted!!';
 
         const comment = {
-            content: values.comment,
+            content: values.comments,
             datePosted: new Date().toString(),
             sid: this.$route.params.id,
             name: auth.currentUser.displayName,
             uid: auth.currentUser.uid,
         };
+
+        console.log(comment);
         
         await commentsCollection.add(comment);
 
@@ -175,6 +182,9 @@ methods: {
 
         resetForm();
     }
+  },
+  computed: {
+    ...mapState(useUserStore, ["userLoggedIn"])
   },
   async created() {
     const docSnapshot = await songsCollection.doc(this.$route.params.id).get()
