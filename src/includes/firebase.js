@@ -19,10 +19,12 @@ const firebaseConfig = {
 
   const usersCollection = db.collection('users');
   const songsCollection = db.collection('songs');
+  const commentsCollection = db.collection('comments');
 
   export {
     auth,
     usersCollection,
     songsCollection,
+    commentsCollection,
     storage
   }
