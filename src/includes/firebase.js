@@ -21,6 +21,10 @@ const firebaseConfig = {
   const songsCollection = db.collection('songs');
   const commentsCollection = db.collection('comments');
 
+  db.enablePersistence().catch((error) => {
+    console.log(`persistence ${error.code}`);
+  });
+
   export {
     auth,
     usersCollection,
