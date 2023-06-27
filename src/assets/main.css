@@ -81,3 +81,15 @@ input[type="file"] {
     background-position: -4000px 0;
   }
 }
+
+.submit-btn {
+  background-color: #20d862;
+}
+
+.back-btn {
+  background-color: #5e5755;
+}
+
+.comment-submit {
+  background-color: #20d862;
+}
